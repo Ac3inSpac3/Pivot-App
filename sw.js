@@ -1,6 +1,6 @@
-var GHPATH = '/Pivot-App/';
+var GHPATH = '/Pivot-App';
 var APP_PREFIX = 'pivot_';
-var VERSION = 'version_005';
+var VERSION = 'version_007';
 var URLS = [    
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
