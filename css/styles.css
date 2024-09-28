@@ -1,22 +1,145 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    background-color: #fff;
-    margin: 0;
-    padding: 2em;
-    height: 90vh;
-    background: url(../img/icon.png) 95% 95% no-repeat;
-    background-size: 20vh;
-}
-h1 {
-    font-size: 1.5em;
-    font-weight: normal;
+/* Reset and basic styles */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-p {
-    width: 80vw;
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #2c3e50;
 }
-a {
-    color: #369;
+
+header {
+    background-color: #34495e;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    color: #ecf0f1;
+    font-weight: lighter;
+}
+
+main {
+    padding: 20px;
+}
+
+#task-input {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#task-input input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#task-input button {
+    padding: 10px 20px;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#task-input button:hover {
+    background-color: #16a085;
+}
+
+.task-item {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.task-item:hover {
+    background-color: #bdc3c7;
+}
+
+/* Header Styles */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #34495e;
+    padding: 10px 20px;
+}
+
+.header-container h1 {
+    color: #ecf0f1;
+}
+
+.navigation ul {
+    list-style: none;
+    display: flex;
+}
+
+.navigation li {
+    margin-left: 20px;
+}
+
+.navigation a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+.navigation a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #34495e;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-container p {
+    margin: 0;
+}
+
+/* Task Item Styles */
+.task-item {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-header h3 {
+    margin: 0;
+}
+
+.toggle-subtasks {
+    background-color: transparent;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+}
+
+.task-details p {
+    margin: 5px 0;
+}
+
+.subtasks ul {
+    list-style: none;
+    padding-left: 15px;
+}
+
+.subtasks li {
+    margin-bottom: 5px;
 }

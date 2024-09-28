@@ -1,0 +1,17 @@
+<!-- task-item.html - Task Item Component for Pivot App -->
+<div class="task-item">
+    <div class="task-header">
+        <h3>{{taskName}}</h3>
+        <button class="toggle-subtasks">Subtasks</button>
+    </div>
+    <div class="task-details">
+        <p>Due Date: {{dueDate}}</p>
+        <p>Status: {{status}}</p>
+    </div>
+    <div class="subtasks" style="display: none;">
+        <ul>
+            <!-- Subtasks will be listed here -->
+            <li>{{subtaskName}}</li>
+        </ul>
+    </div>
+</div>
