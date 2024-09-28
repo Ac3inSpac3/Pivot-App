@@ -1,6 +1,6 @@
-var GHPATH = '/github-page-pwa';
-var APP_PREFIX = 'gppwa_';
-var VERSION = 'version_002';
+var GHPATH = '/Pivot-App';
+var APP_PREFIX = 'pivot_';
+var VERSION = 'version_003';
 var URLS = [    
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
