@@ -6,16 +6,16 @@
     <title>Pivot</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Manifest and Stylesheets -->
-    <link rel="stylesheet" href="/Pivot-App/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <!-- Additional styles -->
-    <link rel="stylesheet" href="/Pivot-App/css/calendar.css">
+    <link rel="stylesheet" href="css/calendar.css">
     <!-- PWA meta tags for iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- App Icons -->
-    <link rel="apple-touch-icon" href="/Pivot-App/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <!-- Pages Relations -->
-    <link rel="canonical" href="https://ac3inspac3.github.io/Pivot-App/" />
-    <link rel="manifest" href="/Pivot-App/manifest.webmanifest">
+    <link rel="canonical" href="https://ac3inspac3.github.io" />
+    <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
     <!-- Header Component -->
@@ -40,17 +40,17 @@
     <div id="footer"></div>
 
     <!-- Scripts -->
-    <script src="/Pivot-App/js/libs/fullcalendar.min.js"></script>
-    <script src="/Pivot-App/js/app.js"></script>
-    <script src="/Pivot-App/js/tasks.js"></script>
-    <script src="/Pivot-App/js/calendar.js"></script>
-    <script src="/Pivot-App/js/auth.js"></script>
+    <script src="js/libs/fullcalendar.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/auth.js"></script>
 
     <script>
         if (navigator.serviceWorker) {
             navigator.serviceWorker.register (
-                '/Pivot-App/sw.js',
-                {scope: '/Pivot-App/'}
+                'sw.js',
+                {scope: ''}
             )
         }
     </script>
