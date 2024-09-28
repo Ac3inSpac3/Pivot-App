@@ -1,4 +1,4 @@
-var GHPATH = '/Pivot-App';
+var GHPATH = '/pwa';
 var APP_PREFIX = 'pivot_';
 var VERSION = 'version_004';
 var URLS = [    
