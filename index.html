@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Manifest and Stylesheets -->
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="manifest" href="/Pivot-App/manifest.webmanifest">
+    <link rel="manifest" href="manifest.webmanifest">
     <!-- Additional styles -->
     <link rel="stylesheet" href="css/calendar.css">
     <!-- PWA meta tags for iOS -->
@@ -40,20 +40,17 @@
     <div id="footer"></div>
 
     <!-- Scripts -->
-    <script src="js/libs/fullcalendar.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/tasks.js"></script>
-    <script src="js/calendar.js"></script>
     <script src="js/auth.js"></script>
 
-    <script>
-        if (navigator.serviceWorker) {
-            navigator.serviceWorker.register (
-                '/Pivot-App/sw.js',
-                {scope: '/Pivot-App/'}
-            )
-        }
-    </script>
+<script>
+    if (navigator.serviceWorker) {
+        let swPath = window.location.pathname.includes('/Pivot-App/') ? '/Pivot-App/sw.js' : '/sw.js';
+        navigator.serviceWorker.register(swPath, { scope: window.location.pathname.includes('/Pivot-App/') ? '/Pivot-App/' : '/' });
+    }
+</script>
+
 
     <!-- Load Components -->
     <script>

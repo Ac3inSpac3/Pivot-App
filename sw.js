@@ -1,11 +1,14 @@
-var GHPATH = '/Pivot-App';
 var APP_PREFIX = 'pivot_';
-var VERSION = 'version_021';
-const URLS = [    
-  `${GHPATH}/`,
-  `${GHPATH}/index.html`,
-  `${GHPATH}/css/styles.css`,
-  `${GHPATH}/js/app.js`
+var VERSION = 'version_022';
+
+// Detect the base path dynamically
+var BASE_PATH = self.location.pathname.includes('/Pivot-App/') ? '/Pivot-App/' : '/';
+
+const URLS = [
+  `${BASE_PATH}`,
+  `${BASE_PATH}index.html`,
+  `${BASE_PATH}css/styles.css`,
+  `${BASE_PATH}js/app.js`
 ];
 
 var CACHE_NAME = APP_PREFIX + VERSION
