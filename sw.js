@@ -1,11 +1,10 @@
 var GHPATH = '/Pivot-App';
 var APP_PREFIX = 'pivot_';
-var VERSION = 'version_020';
+var VERSION = 'version_021';
 const URLS = [    
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
   `${GHPATH}/css/styles.css`,
-  `${GHPATH}/img/icon.png`,
   `${GHPATH}/js/app.js`
 ];
 
@@ -29,13 +28,18 @@ self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       console.log('Installing cache : ' + CACHE_NAME);
-      return cache.addAll(URLS).catch((error) => {
-        console.error('Failed to cache resources:', error);
-        // You can choose to ignore the error or retry later
-      });
+      return Promise.all(
+        URLS.map(function(url) {
+          return cache.add(url).catch((error) => {
+            console.error('Failed to cache ' + url + ':', error);
+            // Handle the failed request here (e.g., retry later or skip it)
+          });
+        })
+      );
     })
-  )
+  );
 });
+
 
 self.addEventListener('activate', function (e) {
   e.waitUntil(
