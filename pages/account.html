@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <script type="module" src="../js/auth.js"></script>
+    <!-- Header Component -->
+    <div id="header"></div>
+    <!-- Main Content -->
+    <main>
+        <h2>User Account</h2>
+        
+        <!-- User Information Form -->
+        <form id="user-info-form">
+            <label for="user-email">Email:</label>
+            <input type="text" id="user-email" readonly>
+
+            <label for="user-name">Name:</label>
+            <input type="text" id="user-name" placeholder="Enter your name">
+
+            <label for="user-bio">Bio:</label>
+            <textarea id="user-bio" placeholder="Enter your bio"></textarea>
+
+            <button type="button" id="save-info">Save Info</button>
+        </form>
+
+        <p>Your current information:</p>
+        <ul>
+            <li>Email: <span id="display-email"></span></li>
+            <li>Name: <span id="display-name"></span></li>
+            <li>Bio: <span id="display-bio"></span></li>
+        </ul>
+
+    </main>
+
+    <!-- Footer Component -->
+    <div id="footer"></div>
+
+    <!-- Load Components -->
+    <script>
+        // Load Header Component
+        fetch('../components/header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header').innerHTML = data);
+
+        // Load Footer Component
+        fetch('../components/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+
+        // Optionally, load Task Item Components dynamically
+    </script>
+</body>
+</html>
