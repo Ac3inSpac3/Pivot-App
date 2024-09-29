@@ -3,6 +3,8 @@
 // Array to store tasks
 let tasks = [];
 
+console.log("tasks loaded");
+
 // Function to add a new task
 function addTask(taskName) {
     const task = {
@@ -28,26 +30,11 @@ function renderTasks() {
     });
 }
 
-// Function to add a subtask
-function addSubtask(parentTaskId, subtaskName) {
-    const parentTask = tasks.find(task => task.id === parentTaskId);
-    if (parentTask) {
-        parentTask.subtasks.push({
-            id: Date.now(),
-            name: subtaskName,
-            completed: false
-        });
-        renderTasks();
+// Event listener for adding tasks
+document.getElementById('add-task-button').addEventListener('click', () => {
+    const taskNameInput = document.getElementById('task-name');
+    if (taskNameInput.value.trim()) {
+        addTask(taskNameInput.value.trim());
+        taskNameInput.value = '';
     }
-}
-
-// Function to set a task as blocking
-function setTaskBlocking(taskId, isBlocking) {
-    const task = tasks.find(task => task.id === taskId);
-    if (task) {
-        task.blocking = isBlocking;
-        renderTasks();
-    }
-}
-
-// Event listeners and other task-related logic can be added here
+});
