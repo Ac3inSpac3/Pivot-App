@@ -1,13 +1,9 @@
-// components.js
-
 // Load Header Component
 fetch('components/header.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('header').innerHTML = data;
-
-        // Initialize the hamburger menu functionality after header is loaded
-        initializeHamburgerMenu();
+        initializeHamburgerMenu(); // Initialize hamburger menu
     });
 
 // Load Footer Component
@@ -21,39 +17,31 @@ fetch('components/footer.html')
 fetch('components/login-modal.html')
     .then(response => response.text())
     .then(data => {
-        document.body.insertAdjacentHTML('beforeend', data); // Insert modal at the end of the body
-        // Initialize modal functionality after it is loaded
-        const closeModalButton = document.getElementById('close-modal');
-        const loginModal = document.getElementById('auth-modal');
-
-        closeModalButton?.addEventListener('click', () => {
-            console.log('Close button clicked');  // Check if this logs
-            loginModal.style.display = 'none';
-        });
-
-        // Initialize modal functionality after it is loaded
-        initializeModal();
+        document.body.insertAdjacentHTML('beforeend', data);
+        initializeModal(); // Initialize modal after loading
     });
 
-// Initialize hamburger menu functionality
+// Initialize hamburger menu functionality with touch support
 function initializeHamburgerMenu() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const loginModal = document.getElementById('auth-modal');
 
     hamburger?.addEventListener('click', () => {
-        navMenu.classList.toggle('show'); // Toggle the "show" class to slide the menu
+        navMenu.classList.toggle('show');
     });
 
-    window.addEventListener('click', (event) => {
-        // Only close the sidebar if click is outside navigation, hamburger, and modal
+    function closeSidebarOnOutsideClick(event) {
         if (!event.target.closest('.navigation') && !event.target.closest('.hamburger') && !event.target.closest('#auth-modal')) {
-            navMenu.classList.remove('show'); // Close the menu if clicked outside
+            navMenu.classList.remove('show');
         }
-    });
+    }
+
+    window.addEventListener('click', closeSidebarOnOutsideClick);
+    window.addEventListener('touchstart', closeSidebarOnOutsideClick); // Touch support for mobile
 }
 
-// Initialize modal functionality
+// Initialize modal functionality with touch support
 function initializeModal() {
     const loginButton = document.getElementById('login-button');
     const loginModal = document.getElementById('auth-modal');
@@ -67,22 +55,25 @@ function initializeModal() {
     // Show modal and disable sidebar
     loginButton?.addEventListener('click', () => {
         loginModal.style.display = 'flex';
-        navMenu.style.pointerEvents = 'none';  // Disable sidebar
+        navMenu.style.pointerEvents = 'none';
     });
 
     // Close modal and re-enable sidebar
     closeModalButton?.addEventListener('click', () => {
         loginModal.style.display = 'none';
-        navMenu.style.pointerEvents = 'auto';  // Re-enable sidebar
+        navMenu.style.pointerEvents = 'auto';
     });
 
-    // Close modal when clicking outside of it
-    window.addEventListener('click', (event) => {
+    // Close modal when clicking or tapping outside
+    function closeModalOnOutsideClick(event) {
         if (event.target === loginModal) {
             loginModal.style.display = 'none';
-            navMenu.style.pointerEvents = 'auto';  // Re-enable sidebar
+            navMenu.style.pointerEvents = 'auto';
         }
-    });
+    }
+
+    window.addEventListener('click', closeModalOnOutsideClick);
+    window.addEventListener('touchstart', closeModalOnOutsideClick); // Touch support for mobile
 
     // Toggle to registration form
     showRegisterLink.addEventListener('click', () => {
@@ -95,7 +86,4 @@ function initializeModal() {
         registerForm.style.display = 'none';
         loginForm.style.display = 'block';
     });
-
-
-
 }
