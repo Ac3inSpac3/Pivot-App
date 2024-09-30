@@ -28,17 +28,25 @@ function initializeHamburgerMenu() {
     const loginModal = document.getElementById('auth-modal');
 
     hamburger?.addEventListener('click', () => {
-        navMenu.classList.toggle('show');
+        navMenu.classList.toggle('show'); // Toggle the sidebar
     });
 
     function closeSidebarOnOutsideClick(event) {
         if (!event.target.closest('.navigation') && !event.target.closest('.hamburger') && !event.target.closest('#auth-modal')) {
-            navMenu.classList.remove('show');
+            navMenu.classList.remove('show'); // Close the sidebar when clicking outside
         }
     }
 
     window.addEventListener('click', closeSidebarOnOutsideClick);
     window.addEventListener('touchstart', closeSidebarOnOutsideClick); // Touch support for mobile
+
+    // Close the sidebar when clicking on any sidebar item (excluding the login button)
+    const navLinks = document.querySelectorAll('.navigation a:not(#login-button)');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('show'); // Collapse sidebar
+        });
+    });
 }
 
 // Initialize modal functionality with touch support

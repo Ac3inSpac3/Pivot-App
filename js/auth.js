@@ -3,7 +3,7 @@
 // Import Firebase functionality
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -21,58 +21,67 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Login functionality
-document.getElementById('submit-login')?.addEventListener('click', () => {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            alert('Login successful!');
-            document.getElementById('login-modal').style.display = 'none'; // Close modal on successful login
-            window.location.href = 'account.html';  // Redirect to account page
-        })
-        .catch((error) => {
-            alert('Login failed: ' + error.message);
-        });
-});
+// Export the auth object so it can be used in other files
+export { auth, db };
 
-// Registration functionality
-document.getElementById('submit-register')?.addEventListener('click', () => {
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            alert('Registration successful!');
-            document.getElementById('login-modal').style.display = 'none'; // Close modal on successful registration
-            window.location.href = 'account.html';  // Redirect to account page
-        })
-        .catch((error) => {
-            alert('Registration failed: ' + error.message);
-        });
-});
+// Ensure DOM is fully loaded before adding event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Login functionality
+    document.getElementById('submit-login-modal')?.addEventListener('click', () => {
+        const email = document.getElementById('login-email-modal').value;
+        const password = document.getElementById('login-password-modal').value;
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                document.getElementById('auth-modal').style.display = 'none'; // Close modal on successful login
+                window.location.href = 'account.html';  // Redirect to account page
+            })
+            .catch((error) => {
+                alert('Login failed: ' + error.message);
+            });
+    });
 
-// Logout functionality
-document.getElementById('logout-button')?.addEventListener('click', () => {
-    signOut(auth).then(() => {
-        alert('Logout successful!');
-        window.location.href = 'index.html';  // Redirect to home after logout
-    }).catch((error) => {
-        alert('Logout failed: ' + error.message);
+    // Registration functionality
+    document.getElementById('submit-register-modal')?.addEventListener('click', () => {
+        const email = document.getElementById('register-email-modal').value;
+        const password = document.getElementById('register-password-modal').value;
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                document.getElementById('auth-modal').style.display = 'none'; // Close modal on successful registration
+                window.location.href = 'account.html';  // Redirect to account page
+            })
+            .catch((error) => {
+                alert('Registration failed: ' + error.message);
+            });
+    });
+
+    // Logout functionality
+    document.getElementById('logout-button')?.addEventListener('click', () => {
+        signOut(auth).then(() => {
+            alert('Logout successful!');
+            window.location.href = 'index.html';  // Redirect to home after logout
+        }).catch((error) => {
+            alert('Logout failed: ' + error.message);
+        });
+    });
+
+    // Check authentication state and update UI
+    onAuthStateChanged(auth, (user) => {
+        const loginButton = document.getElementById('login-button');
+        const logoutButton = document.getElementById('logout-button');
+        
+        if (user) {
+            loginButton.style.display = 'none';
+            logoutButton.style.display = 'block';
+    
+            // Check if we are on the account page and display user info
+            if (window.location.pathname.includes('account.html')) {
+                document.getElementById('welcome-message').textContent = `Welcome, ${user.email}`;
+            }
+        } else {
+            loginButton.style.display = 'block';
+            logoutButton.style.display = 'none';
+        }
     });
 });
 
-// Monitor authentication state
-onAuthStateChanged(auth, (user) => {
-    const loginButton = document.getElementById('login-button');
-    const logoutButton = document.getElementById('logout-button');
-    
-    if (user) {
-        loginButton.style.display = 'none';
-        logoutButton.style.display = 'block';
-
-        // Handle additional user-specific actions (e.g., fetching user data from Firestore)
-    } else {
-        loginButton.style.display = 'block';
-        logoutButton.style.display = 'none';
-    }
-});
