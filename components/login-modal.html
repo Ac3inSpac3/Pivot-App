@@ -1,0 +1,28 @@
+<!-- login-modal.html -->
+<div id="auth-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" id="close-modal">&times;</span>
+
+        <!-- Login Form -->
+        <div id="login-form">
+            <h2>Login</h2>
+            <form>
+                <input type="email" id="login-email-modal" placeholder="Enter your email" required>
+                <input type="password" id="login-password-modal" placeholder="Enter your password" required>
+                <button type="button" id="submit-login-modal">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="show-register">Register here</a></p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" style="display: none;">
+            <h2>Register</h2>
+            <form>
+                <input type="email" id="register-email-modal" placeholder="Enter your email" required>
+                <input type="password" id="register-password-modal" placeholder="Enter your password" required>
+                <button type="button" id="submit-register-modal">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
+        </div>
+    </div>
+</div>

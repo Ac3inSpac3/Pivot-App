@@ -1,5 +1,5 @@
 var APP_PREFIX = 'pivot_';
-var VERSION = 'version_041';
+var VERSION = 'version_048';
 
 // Detect the base path dynamically
 var BASE_PATH = self.location.pathname.includes('/Pivot-App/') ? '/Pivot-App/' : '/';
