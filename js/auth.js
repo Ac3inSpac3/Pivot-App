@@ -1,4 +1,5 @@
 // auth.js
+import { loadPage } from './app.js';
 
 // Import Firebase functionality
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 document.getElementById('auth-modal').style.display = 'none'; // Close modal on successful login
-                window.location.href = 'account.html';  // Redirect to account page
+                loadPage('account')
             })
             .catch((error) => {
                 alert('Login failed: ' + error.message);
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 document.getElementById('auth-modal').style.display = 'none'; // Close modal on successful registration
-                window.location.href = 'account.html';  // Redirect to account page
+                loadPage('account')
             })
             .catch((error) => {
                 alert('Registration failed: ' + error.message);
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('logout-button')?.addEventListener('click', () => {
         signOut(auth).then(() => {
             alert('Logout successful!');
-            window.location.href = 'index.html';  // Redirect to home after logout
+            loadPage('home')
         }).catch((error) => {
             alert('Logout failed: ' + error.message);
         });

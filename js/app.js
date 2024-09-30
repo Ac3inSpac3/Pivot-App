@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (user) {
                 loadPage('dashboard'); // Load the dashboard if user is logged in
             } else {
-                loadPage('login'); // Load the login page if user is not logged in
+                //loadPage('login'); // Load the login page if user is not logged in
             }
         });
     }
