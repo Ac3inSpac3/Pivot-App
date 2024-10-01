@@ -1,23 +1,31 @@
 <div class="task-container">
     <!-- Task header card with task count and add task button -->
     <div class="task-header-card">
-        <h2>All my tasks <span id="task-count"></span></h2>
-        <button class="add-task-button" id="add-task-button">Add task +</button>
+        <h2>All my tasks: <span id="task-count"></span></h2>
+        <button class="add-task-button" id="add-task-button">+</button>
     </div>
 
     <!-- Task list will be dynamically populated -->
     <div class="task-list" id="task-list"></div>
 </div>
 
-<!-- Modal for adding new tasks (similar to login modal) -->
+<!-- Modal for adding/editing tasks -->
 <div id="task-modal" class="modal">
     <div class="modal-content">
         <span class="close-button" id="close-task-modal">&times;</span>
-        <h2>Add New Task</h2>
+        <h2 id="task-modal-title">Add/Edit Task</h2>
         <form>
             <input type="text" id="task-title" placeholder="Task title" required>
             <input type="text" id="task-details" placeholder="Task details">
+            <input type="date" id="task-due-date">
+            <select id="task-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
             <button type="button" id="submit-task">Submit</button>
+            <button type="button" id="delete-task" style="display: none;">Delete</button>
         </form>
     </div>
 </div>
+

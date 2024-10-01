@@ -49,59 +49,55 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tasks-link')?.addEventListener('click', () => loadPage('tasks'));
     document.getElementById('home-link')?.addEventListener('click', () => loadPage('home'));
 
-    function initializePage() {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loadPage('account');
-            } else {
-                loadPage('home');
-            }
-        });
-    }
-
-    function displayUserEmail() {
-        const user = auth.currentUser;
-        if (user && user.email) {
-            document.getElementById('user-email').textContent = user.email;
-        }
-    }
-
     function initializeTaskPage() {
         const taskModal = document.getElementById('task-modal');
         const addTaskButton = document.getElementById('add-task-button');
         const closeModalButton = document.getElementById('close-task-modal');
         const submitTaskButton = document.getElementById('submit-task');
+        const deleteTaskButton = document.getElementById('delete-task'); // New delete button
         const taskList = document.getElementById('task-list');
+        let editingTaskId = null;
     
-        // Show the modal when the "Add Task" button is clicked
-        addTaskButton.addEventListener('click', () => {
+        // Open modal for adding a new task
+        addTaskButton?.addEventListener('click', () => {
             taskModal.style.display = 'flex';
+            clearTaskModal();
+            document.getElementById('task-modal-title').textContent = 'Add New Task';
+            editingTaskId = null;  // Reset editing task ID
+            deleteTaskButton.style.display = 'none';  // Hide delete button when adding new task
         });
     
         // Close the modal when the close button is clicked
-        closeModalButton.addEventListener('click', () => {
+        closeModalButton?.addEventListener('click', () => {
             taskModal.style.display = 'none';
         });
     
-        // Submit a new task when "Submit" button is clicked
-        submitTaskButton.addEventListener('click', async () => {
+        // Submit a new or edited task
+        submitTaskButton?.addEventListener('click', async () => {
             const title = document.getElementById('task-title').value;
             const details = document.getElementById('task-details').value;
+            const dueDate = document.getElementById('task-due-date').value;
+            const priority = document.getElementById('task-priority').value;
     
             if (title && details) {
                 const user = auth.currentUser;
                 if (user) {
                     try {
-                        await addDoc(collection(db, 'users', user.uid, 'tasks'), {
-                            title: title,
-                            details: details,
-                            createdAt: new Date(),
-                        });
-                        alert('Task added successfully!');
-                        taskModal.style.display = 'none';  // Close the modal after adding task
-                        loadTasks();  // Refresh the task list
+                        if (editingTaskId) {
+                            // Update task if editing
+                            await updateDoc(doc(db, 'users', user.uid, 'tasks', editingTaskId), {
+                                title, details, dueDate, priority
+                            });
+                        } else {
+                            // Add a new task
+                            await addDoc(collection(db, 'users', user.uid, 'tasks'), {
+                                title, details, dueDate, priority, createdAt: new Date()
+                            });
+                        }
+                        taskModal.style.display = 'none';  // Close modal
+                        loadTasks();  // Refresh task list
                     } catch (error) {
-                        console.error('Error adding task:', error);
+                        console.error('Error adding/updating task:', error);
                     }
                 }
             } else {
@@ -109,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     
+        // Load tasks dynamically
         async function loadTasks() {
             const user = auth.currentUser;
             if (user) {
@@ -116,28 +113,68 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tasksCollection = collection(db, 'users', user.uid, 'tasks');
                 const q = query(tasksCollection, orderBy('createdAt', 'asc'));
                 const querySnapshot = await getDocs(q);
-        
+    
                 let taskCount = 0;  // Initialize task count
-        
+    
                 querySnapshot.forEach((doc) => {
                     const task = doc.data();
-                    taskList.innerHTML += `<div class="task-list-item">
-                        <div>
-                            <h3>${task.title}</h3>
-                            <p>${task.details}</p>
-                        </div>
-                    </div>`;
-                    taskCount++;  // Increment task count for each task
+                    const taskItem = document.createElement('div');
+                    taskItem.className = 'task-list-item';
+                    taskItem.innerHTML = `
+                        <h3>${task.title}</h3>
+                        <p>${task.details}</p>
+                        <p>Due Date: ${task.dueDate || 'Not set'}</p>
+                        <p>Priority: ${task.priority || 'Low'}</p>
+                    `;
+    
+                    taskItem.addEventListener('click', () => {
+                        // Load task details into the modal for editing
+                        document.getElementById('task-title').value = task.title;
+                        document.getElementById('task-details').value = task.details;
+                        document.getElementById('task-due-date').value = task.dueDate || '';
+                        document.getElementById('task-priority').value = task.priority || 'low';
+                        editingTaskId = doc.id;  // Set task ID for editing
+                        taskModal.style.display = 'flex';
+                        document.getElementById('task-modal-title').textContent = 'Edit Task';
+                        deleteTaskButton.style.display = 'block';  // Show delete button when editing
+                    });
+    
+                    taskList.appendChild(taskItem);
+                    taskCount++;  // Increment task count
                 });
-        
-                // Update the task count in the UI
+    
+                // Update task count
                 document.getElementById('task-count').textContent = taskCount;
             }
         }
-        
+    
+        // Delete task functionality
+        deleteTaskButton?.addEventListener('click', async () => {
+            if (editingTaskId) {
+                const user = auth.currentUser;
+                if (user) {
+                    try {
+                        await deleteDoc(doc(db, 'users', user.uid, 'tasks', editingTaskId));
+                        alert('Task deleted successfully!');
+                        taskModal.style.display = 'none';  // Close modal
+                        loadTasks();  // Refresh task list
+                    } catch (error) {
+                        console.error('Error deleting task:', error);
+                    }
+                }
+            }
+        });
+    
+        // Clear modal fields
+        function clearTaskModal() {
+            document.getElementById('task-title').value = '';
+            document.getElementById('task-details').value = '';
+            document.getElementById('task-due-date').value = '';
+            document.getElementById('task-priority').value = 'low';
+        }
+    
         loadTasks();  // Load tasks when the page is initialized
     }
-    
 
     initializePage();
 });

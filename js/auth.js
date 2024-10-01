@@ -3,7 +3,7 @@
 // Import Firebase functionality
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, orderBy} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, updateDoc, doc, deleteDoc} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -34,6 +34,9 @@ window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
 window.signOut = signOut;
 window.onAuthStateChanged = onAuthStateChanged;
 window.orderBy = orderBy;
+window.updateDoc = updateDoc;
+window.doc = doc;
+window.deleteDoc = deleteDoc;
 
 // Event listeners for login and register
 document.addEventListener('DOMContentLoaded', () => {
