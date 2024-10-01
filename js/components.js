@@ -6,13 +6,6 @@ fetch('components/header.html')
         initializeHamburgerMenu(); // Initialize hamburger menu
     });
 
-// Load Footer Component
-fetch('components/footer.html')
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('footer').innerHTML = data;
-    });
-
 // Load Login Modal Component
 fetch('components/login-modal.html')
     .then(response => response.text())
