@@ -208,12 +208,48 @@ form button:hover {
 
 #task-due-date {
     width: 60%;
+    background-color: #3a3a3a; /* Keep consistent with the rest of the form */
+    color: #ffffff;
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 #task-priority {
     width: 40%;
     appearance: none; /* Removes default dropdown styling */
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+    padding-right: 30px; /* Adds space for the arrow */
 }
+
+/* Placeholder for Date Input (if the browser supports it) */
+#task-due-date::-webkit-datetime-edit-text,
+#task-due-date::-webkit-datetime-edit-month-field,
+#task-due-date::-webkit-datetime-edit-day-field,
+#task-due-date::-webkit-datetime-edit-year-field {
+    color: #ffffff;
+}
+
+#task-due-date::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* This will invert the color, turning the black icon into white */
+}
+
+/* Add padding around the select to allow the default arrow to show naturally */
+#task-priority::-ms-expand {
+    display: none; /* Hide arrow in IE */
+}
+
+/* Adjusts the styling of the native arrow */
+#task-priority {
+    background-color: #3a3a3a;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
 
 /* Optional: Add custom dropdown arrow */
 #task-priority {
@@ -222,6 +258,7 @@ form button:hover {
     background-position: right 10px center;
     background-size: 10px;
 }
+
 
 
 /* Could be consolidated with button styles under task section */
