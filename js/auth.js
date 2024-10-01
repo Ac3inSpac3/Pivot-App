@@ -1,5 +1,4 @@
 // auth.js
-import { loadPage } from './app.js';
 
 // Import Firebase functionality
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
@@ -22,34 +21,37 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Export the auth object so it can be used in other files
-export { auth, db };
+// Expose globally
+window.auth = auth;
+window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+window.signOut = signOut;
+window.onAuthStateChanged = onAuthStateChanged;
 
-// Ensure DOM is fully loaded before adding event listeners
+// Event listeners for login and register
 document.addEventListener('DOMContentLoaded', () => {
-    
     // Login functionality
     document.getElementById('submit-login-modal')?.addEventListener('click', () => {
         const email = document.getElementById('login-email-modal').value;
         const password = document.getElementById('login-password-modal').value;
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                document.getElementById('auth-modal').style.display = 'none'; // Close modal on successful login
-                loadPage('account')
+                document.getElementById('auth-modal').style.display = 'none'; // Close modal
+                window.location.href = '#dashboard'; // Load dashboard
             })
             .catch((error) => {
                 alert('Login failed: ' + error.message);
             });
     });
 
-    // Registration functionality
+    // Register functionality
     document.getElementById('submit-register-modal')?.addEventListener('click', () => {
         const email = document.getElementById('register-email-modal').value;
         const password = document.getElementById('register-password-modal').value;
         createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                document.getElementById('auth-modal').style.display = 'none'; // Close modal on successful registration
-                loadPage('account')
+            .then(() => {
+                document.getElementById('auth-modal').style.display = 'none'; // Close modal
+                window.location.href = '#dashboard'; // Load dashboard
             })
             .catch((error) => {
                 alert('Registration failed: ' + error.message);
@@ -58,24 +60,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Logout functionality
     document.getElementById('logout-button')?.addEventListener('click', () => {
-        signOut(auth).then(() => {
-            alert('Logout successful!');
-            loadPage('home')
-        }).catch((error) => {
-            alert('Logout failed: ' + error.message);
-        });
+        signOut(auth)
+            .then(() => {
+                alert('Logout successful!');
+                window.location.href = '#home'; // Redirect to home
+            })
+            .catch((error) => {
+                alert('Logout failed: ' + error.message);
+            });
     });
-
-    // Check authentication state and update UI
+    
     onAuthStateChanged(auth, (user) => {
         const loginButton = document.getElementById('login-button');
         const logoutButton = document.getElementById('logout-button');
-        
+        const navMenu = document.getElementById('nav-menu'); // Sidebar
+    
         if (user) {
             loginButton.style.display = 'none';
             logoutButton.style.display = 'block';
     
-            // Check if we are on the account page and display user info
+            // Collapse the sidebar and re-enable it after login
+            navMenu.classList.remove('show');
+            navMenu.style.pointerEvents = 'auto';
+    
+            // Display user's email on the account page if logged in
             if (window.location.pathname.includes('account.html')) {
                 document.getElementById('welcome-message').textContent = `Welcome, ${user.email}`;
             }
@@ -84,5 +92,5 @@ document.addEventListener('DOMContentLoaded', () => {
             logoutButton.style.display = 'none';
         }
     });
+    
 });
-

@@ -45,6 +45,7 @@ function initializeHamburgerMenu() {
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('show'); // Collapse sidebar
+            navMenu.style.pointerEvents = 'auto'; // Ensure re-enabling
         });
     });
 }
