@@ -30,8 +30,15 @@ window.onAuthStateChanged = onAuthStateChanged;
 
 // Event listeners for login and register
 document.addEventListener('DOMContentLoaded', () => {
-    // Login functionality
-    document.getElementById('submit-login-modal')?.addEventListener('click', () => {
+    // Login modal submit button and Enter key handler
+    document.getElementById('submit-login-modal')?.addEventListener('click', handleLogin);
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && document.getElementById('login-form').style.display === 'block') {
+            handleLogin();
+            console.log("loging in user")
+        }
+    });
+    function handleLogin() {
         const email = document.getElementById('login-email-modal').value;
         const password = document.getElementById('login-password-modal').value;
         signInWithEmailAndPassword(auth, email, password)
@@ -42,10 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((error) => {
                 alert('Login failed: ' + error.message);
             });
-    });
+    }
 
-    // Register functionality
-    document.getElementById('submit-register-modal')?.addEventListener('click', () => {
+    // Register modal submit button and Enter key handler
+    document.getElementById('submit-register-modal')?.addEventListener('click', handleRegister);
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && document.getElementById('register-form').style.display === 'block') {
+            handleRegister();
+            console.log("registering user")
+        }
+    });
+    function handleRegister() {
         const email = document.getElementById('register-email-modal').value;
         const password = document.getElementById('register-password-modal').value;
         createUserWithEmailAndPassword(auth, email, password)
@@ -56,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((error) => {
                 alert('Registration failed: ' + error.message);
             });
-    });
+    }
 
     // Logout functionality
     document.getElementById('logout-button')?.addEventListener('click', () => {
@@ -69,16 +83,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Logout failed: ' + error.message);
             });
     });
-    
+
     onAuthStateChanged(auth, (user) => {
         const loginButton = document.getElementById('login-button');
+        const accountButton = document.getElementById('account-link');
+        const dashboardButton = document.getElementById('dashboard-link');
         const logoutButton = document.getElementById('logout-button');
+        const tasksButton = document.getElementById('tasks-link');
         const navMenu = document.getElementById('nav-menu'); // Sidebar
     
         if (user) {
             loginButton.style.display = 'none';
             logoutButton.style.display = 'block';
-    
+            accountButton.style.display = 'block';
+            dashboardButton.style.display = 'block';
+            tasksButton.style.display = 'block';
+
             // Collapse the sidebar and re-enable it after login
             navMenu.classList.remove('show');
             navMenu.style.pointerEvents = 'auto';
@@ -90,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             loginButton.style.display = 'block';
             logoutButton.style.display = 'none';
+            accountButton.style.display = 'none';
+            dashboardButton.style.display = 'none';
+            tasksButton.style.display = 'none';
         }
     });
     
