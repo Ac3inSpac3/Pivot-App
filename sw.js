@@ -1,13 +1,21 @@
-var GHPATH = '/Pivot-App/';
 var APP_PREFIX = 'pivot_';
-var VERSION = 'version_005';
-var URLS = [    
-  `${GHPATH}/`,
-  `${GHPATH}/index.html`,
-  `${GHPATH}/css/styles.css`,
-  `${GHPATH}/img/icon.png`,
-  `${GHPATH}/js/app.js`
-]
+var VERSION = 'version_054';
+
+// Detect the base path dynamically
+var BASE_PATH = self.location.pathname.includes('/Pivot-App/') ? '/Pivot-App/' : '/';
+
+const URLS = [
+  `${BASE_PATH}`,
+  `${BASE_PATH}index.html`,
+  `${BASE_PATH}components/footer.html`,
+  `${BASE_PATH}components/header.html`,
+  `${BASE_PATH}components/login-modal.html`,
+  `${BASE_PATH}css/styles.css`,
+  `${BASE_PATH}js/app.js`,
+  `${BASE_PATH}js/tasks.js`,
+  `${BASE_PATH}js/components.js`,
+  `${BASE_PATH}js/auth.js`
+];
 
 var CACHE_NAME = APP_PREFIX + VERSION
 self.addEventListener('fetch', function (e) {
@@ -23,16 +31,24 @@ self.addEventListener('fetch', function (e) {
       }
     })
   )
-})
+});
 
 self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       console.log('Installing cache : ' + CACHE_NAME);
-      return cache.addAll(URLS)
+      return Promise.all(
+        URLS.map(function(url) {
+          return cache.add(url).catch((error) => {
+            console.error('Failed to cache ' + url + ':', error);
+            // Handle the failed request here (e.g., retry later or skip it)
+          });
+        })
+      );
     })
-  )
-})
+  );
+});
+
 
 self.addEventListener('activate', function (e) {
   e.waitUntil(
@@ -49,4 +65,4 @@ self.addEventListener('activate', function (e) {
       }))
     })
   )
-})
+});

@@ -1,42 +1,51 @@
-// Register the service worker for offline support
+// app.js
+
+// Register the service worker
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
     .then(() => console.log('Service Worker registered'))
     .catch(error => console.error('Service Worker registration failed:', error));
 }
 
-// Task management logic
-let tasks = [];
+document.addEventListener('DOMContentLoaded', () => {
+    function loadPage(page) {
+        fetch(`components/${page}.html`)
+            .then(response => response.text())
+            .then(data => {
+                const mainContent = document.getElementById('main-content');
+                if (mainContent) {
+                    mainContent.innerHTML = data;
 
-// Function to add a new task
-function addTask(taskName) {
-    const task = {
-        id: Date.now(),
-        name: taskName,
-        subtasks: [],
-        blocking: false
-    };
-    tasks.push(task);
-    renderTasks();
-}
-
-// Function to render tasks to the DOM
-function renderTasks() {
-    const tasksList = document.getElementById('tasks-list');
-    tasksList.innerHTML = '';
-    tasks.forEach(task => {
-        const taskItem = document.createElement('div');
-        taskItem.className = 'task-item';
-        taskItem.textContent = task.name;
-        tasksList.appendChild(taskItem);
-    });
-}
-
-// Event listener for adding tasks
-document.getElementById('add-task-button').addEventListener('click', () => {
-    const taskNameInput = document.getElementById('task-name');
-    if (taskNameInput.value.trim()) {
-        addTask(taskNameInput.value.trim());
-        taskNameInput.value = '';
+                    // If account page is loaded, display user email
+                    if (page === 'account') {
+                        displayUserEmail();
+                    }
+                }
+            })
+            .catch(error => console.error('Error loading page:', error));
     }
+
+    document.getElementById('dashboard-link')?.addEventListener('click', () => loadPage('dashboard'));
+    document.getElementById('account-link')?.addEventListener('click', () => loadPage('account'));
+    document.getElementById('tasks-link')?.addEventListener('click', () => loadPage('tasks'));
+    document.getElementById('home-link')?.addEventListener('click', () => loadPage('home'));
+
+    function initializePage() {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loadPage('account');
+            } else {
+                loadPage('home');
+            }
+        });
+    }
+
+    function displayUserEmail() {
+        const user = auth.currentUser;
+        if (user && user.email) {
+            document.getElementById('user-email').textContent = user.email;
+        }
+    }
+
+    initializePage();
 });
