@@ -21,7 +21,7 @@ body {
     background-color: #34495e; /* Consistent header color */
     padding: 10px 20px;
     position: relative; /* Ensure it has proper stacking context */
-    z-index: 10; /* Keep the header on top of other content */
+    z-index: 1; /* Keep the header on top of other content */
 }
 
 .header-container h1 {
@@ -125,8 +125,8 @@ footer {
 
 /* Modal styles */
 .modal {
+    position: fixed; 
     display: none;
-    position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
