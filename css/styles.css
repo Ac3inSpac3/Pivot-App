@@ -1,7 +1,7 @@
-/* CSS */
-
-/* Reset and basic styles */
-* {
+/* -----------------------------
+Reset and Basic Styles
+----------------------------- */
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -9,39 +9,44 @@
 
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f7fa;
-    color: #2c3e50;
+    background-color: #1e1e1e;
+    color: #d1d1d1;
 }
 
-/* Header Styles */
+/* Consider consolidating form styles later. */
+
+/* -----------------------------
+Header Styles
+----------------------------- */ 
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #34495e; /* Consistent header color */
-    padding: 10px 20px;
-    position: relative; /* Ensure it has proper stacking context */
-    z-index: 1; /* Keep the header on top of other content */
+    background-color: #2c2c2c;
+    padding: 10px 10px;
 }
 
 .header-container h1 {
-    color: #ecf0f1;
+    color: #ffffff;
 }
 
-/* Hamburger Icon */
+/* -----------------------------
+Hamburger Menu
+----------------------------- */
 .hamburger {
     font-size: 30px;
     cursor: pointer;
-    display: none; /* Hidden by default on larger screens */
-    color: #ecf0f1; /* Set to match the header text color */
+    display: none; /* Hidden on larger screens */
+    color: #ffffff;
 }
 
-/* Change color on hover */
 .hamburger:hover {
-    color: #f0a500; /* Change the color when hovered */
+    color: #dabcff;
 }
 
-/* Navigation */
+/* -----------------------------
+Navigation Styles
+----------------------------- */
 .navigation {
     display: flex;
     align-items: center;
@@ -51,8 +56,6 @@ body {
     list-style: none;
     display: flex;
     gap: 20px;
-    margin: 0;
-    padding: 0;
 }
 
 .navigation ul li {
@@ -60,7 +63,7 @@ body {
 }
 
 .navigation ul li a {
-    color: #ecf0f1;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
 }
@@ -69,21 +72,22 @@ body {
     text-decoration: underline;
 }
 
-/* Mobile view: hamburger menu active */
+/* -----------------------------
+Mobile View (Hamburger Menu)
+----------------------------- */
 @media (max-width: 768px) {
     .hamburger {
-        display: block; /* Show hamburger on small screens */
+        display: block;
     }
 
     .navigation {
         position: fixed;
         top: 0;
         left: -100%;
-        width: 250px;
+        width: 50%;
         height: 100%;
-        background-color: #34495e; /* Match header color */
+        background-color: #2c2c2c;
         flex-direction: column;
-        align-items: flex-start;
         padding: 20px;
         transition: left 0.3s ease-in-out;
     }
@@ -94,15 +98,12 @@ body {
 
     .navigation ul li {
         display: block;
-        width: 100%;
         margin-bottom: 20px;
     }
 
     .navigation ul li a {
         display: block;
         padding: 10px 0;
-        color: #ecf0f1;
-        text-align: left;
         font-size: 18px;
         border-bottom: 1px solid #444;
     }
@@ -112,21 +113,12 @@ body {
     }
 }
 
-/* Footer Styles */
-footer {
-    background-color: #34495e;
-    color: #ecf0f1;
-    text-align: center;
-    padding: 15px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Modal styles */
+/* -----------------------------
+Modal Styles (General)
+----------------------------- */
 .modal {
-    position: fixed; 
     display: none;
+    position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
@@ -138,7 +130,7 @@ footer {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: #2c2c2c;
     padding: 20px;
     border-radius: 10px;
     width: 300px;
@@ -146,6 +138,9 @@ footer {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* -----------------------------
+Close Button (Modal)
+----------------------------- */
 .close-button {
     float: right;
     font-size: 24px;
@@ -156,46 +151,90 @@ footer {
     color: red;
 }
 
-/* Button styling */
+/* -----------------------------
+Form and Button Styling
+----------------------------- */
 form input,
-form button {
+form button,
+form select  {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    border: 2px solid #444;
     border-radius: 5px;
+    background-color: #3a3a3a;
+    color: #ffffff;
+}
+
+form input:focus, 
+form textarea:focus, 
+form select:focus {
+    outline: none; /* Remove default outline */
+    border: 2px solid #dabcff; /* Your desired border color */
+}
+
+form textarea {
+    resize: none; /* Disable manual resizing */
+    overflow: hidden; /* Hide the scrollbars */
+    width: 100%;
+    min-height: 80px; /* Approximately 4 lines by default */
+    max-height: 70vw; /* Approximately 4 lines by default */
+    padding: 12px; /* Add padding inside the textarea */
+    border: 2px solid #444;
+    border-radius: 5px; /* Rounded corners */
+    color: #ffffff;
+    background-color: #3a3a3a;
 }
 
 form button {
-    background-color: #1abc9c;
-    color: white;
+    background-color: #BB86FC;
     cursor: pointer;
 }
 
 form button:hover {
-    background-color: #16a085;
+    background-color: #956aca;
 }
 
-/* Adjust the modal content for both login and registration forms */
-.modal-content {
-    width: 300px;
+/* Container for date and priority to align side by side */
+.date-priority-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#task-due-date {
+    width: 60%;
+}
+
+#task-priority {
+    width: 40%;
+    appearance: none; /* Removes default dropdown styling */
+}
+
+/* Optional: Add custom dropdown arrow */
+#task-priority {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20viewBox%3D%220%200%204%205%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M2%205L0%203h4L2%205z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+}
+
+
+/* Could be consolidated with button styles under task section */
+
+/* -----------------------------
+Task Container and List
+----------------------------- */
+.task-container {
     padding: 20px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.modal-content h2 {
-    margin-bottom: 15px;
-}
-
-.modal-content form {
-    margin-bottom: 20px;
-}
-
-.modal-content p {
-    font-size: 14px;
-}
-
-/* Task Modal */
+/* -----------------------------
+Task Modal (Same Style as Login)
+----------------------------- */
 #task-modal {
     display: none;
     position: fixed;
@@ -210,7 +249,7 @@ form button:hover {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: #2c2c2c;
     padding: 20px;
     border-radius: 10px;
     width: 300px;
@@ -218,30 +257,13 @@ form button:hover {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.close-button {
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close-button:hover {
-    color: red;
-}
-
-/* Task container */
-.task-container {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Card for task count and add task button */
+/* -----------------------------
+Task Header (Task Count and Add Button)
+----------------------------- */
 .task-header-card {
     width: 100%;
     max-width: 800px;
-    background-color: #f7f9fc;
+    background-color: #2c2c2c;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -249,49 +271,42 @@ form button:hover {
     align-items: center;
     padding: 20px;
     margin-bottom: 20px;
-    position: relative; /* This ensures child elements respect card boundary */
 }
 
 .task-header-card h2 {
     font-size: 24px;
-    color: #34495e;
+    color: #f0f0f0;
     margin: 0;
     display: inline-block;
 }
 
-/* Plus button inside the card */
+/* -----------------------------
+Plus Button (Add Task)
+----------------------------- */
 .add-task-button {
-    aspect-ratio : 1 / 1;
-    background-color: #007bff;
+    aspect-ratio: 1/1;
+    max-width: 40px;
+    width: 10%;
+    background-color: #BB86FC;
     border-radius: 50%;
     border: none;
     color: white;
     font-size: 24px;
-    height: 70%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
-    margin-left: 80%; /* Pushes the button to the right inside the card */
-    position: absolute;
 }
 
 .add-task-button:hover {
-    background-color: #0056b3;
+    background-color: #956aca;
 }
 
-/* Each task in its own card */
-.task-list {
-    width: 100%;
-    max-width: 800px;
-}
-
+/* -----------------------------
+Task List Item
+----------------------------- */
 .task-list-item {
     width: 100%;
     max-width: 800px;
-    background-color: white;
+    background-color: #333;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
     margin-bottom: 15px;
     cursor: pointer;
@@ -299,17 +314,23 @@ form button:hover {
 }
 
 .task-list-item:hover {
-    transform: translateY(-5px);
+    transform: scale(1.02); /* Scales up the element */
+    transition: transform 0.2s ease-in-out; /* Adds a smooth transition effect */
 }
+
 
 .task-list-item h3 {
     font-size: 20px;
     margin: 0;
-    color: #2c3e50;
+    color: #f0f0f0;
 }
 
 .task-list-item p {
-    color: #7f8c8d;
+    color: #a9a9a9;
     font-size: 14px;
     margin-top: 5px;
+}
+
+.task-list {
+    width: 100%;
 }

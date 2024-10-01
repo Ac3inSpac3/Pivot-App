@@ -1,5 +1,5 @@
 var APP_PREFIX = 'pivot_';
-var VERSION = 'version_069';
+var VERSION = 'version_077';
 
 // Detect the base path dynamically
 var BASE_PATH = self.location.pathname.includes('/Pivot-App/') ? '/Pivot-App/' : '/';
@@ -10,8 +10,6 @@ const URLS = [
   `${BASE_PATH}components/404.html`,
   `${BASE_PATH}components/account.html`,
   `${BASE_PATH}components/dashboard.html`,
-  `${BASE_PATH}components/footer.html`,
-  `${BASE_PATH}components/header.html`,
   `${BASE_PATH}components/home.html`,
   `${BASE_PATH}components/login-modal.html`,
   `${BASE_PATH}components/tasks.html`,

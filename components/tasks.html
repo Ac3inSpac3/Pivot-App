@@ -16,16 +16,19 @@
         <h2 id="task-modal-title">Add/Edit Task</h2>
         <form>
             <input type="text" id="task-title" placeholder="Task title" required>
-            <input type="text" id="task-details" placeholder="Task details">
-            <input type="date" id="task-due-date">
-            <select id="task-priority">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
+            <textarea id="task-details" placeholder="Task details" rows="4"></textarea>
+            <div class="date-priority-container">
+                <input type="date" id="task-due-date">
+                <select id="task-priority">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
             <button type="button" id="submit-task">Submit</button>
             <button type="button" id="delete-task" style="display: none;">Delete</button>
         </form>
     </div>
 </div>
-

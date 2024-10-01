@@ -49,6 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tasks-link')?.addEventListener('click', () => loadPage('tasks'));
     document.getElementById('home-link')?.addEventListener('click', () => loadPage('home'));
 
+    
+    function initializePage() {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loadPage('account');
+            } else {
+                loadPage('home');
+            }
+        });
+    }
+
+    function displayUserEmail() {
+        const user = auth.currentUser;
+        if (user && user.email) {
+            document.getElementById('user-email').textContent = user.email;
+        }
+    }
+
     function initializeTaskPage() {
         const taskModal = document.getElementById('task-modal');
         const addTaskButton = document.getElementById('add-task-button');
@@ -66,6 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
             editingTaskId = null;  // Reset editing task ID
             deleteTaskButton.style.display = 'none';  // Hide delete button when adding new task
         });
+
+        const taskDetailsTextarea = document.getElementById('task-details');
+        taskDetailsTextarea.addEventListener('input', autoResize);
+
+        function autoResize() {
+            this.style.height = 'auto';
+            this.style.height = `${this.scrollHeight}px`;
+        }
     
         // Close the modal when the close button is clicked
         closeModalButton?.addEventListener('click', () => {
