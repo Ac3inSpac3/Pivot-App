@@ -20,6 +20,8 @@ body {
     align-items: center;
     background-color: #34495e; /* Consistent header color */
     padding: 10px 20px;
+    position: relative; /* Ensure it has proper stacking context */
+    z-index: 10; /* Keep the header on top of other content */
 }
 
 .header-container h1 {
@@ -174,18 +176,6 @@ form button:hover {
     background-color: #16a085;
 }
 
-/* Task Item Styles */
-.task-item {
-    background-color: #ecf0f1;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.task-item:hover {
-    background-color: #bdc3c7;
-}
-
 /* Adjust the modal content for both login and registration forms */
 .modal-content {
     width: 300px;
@@ -203,4 +193,123 @@ form button:hover {
 
 .modal-content p {
     font-size: 14px;
+}
+
+/* Task Modal */
+#task-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: red;
+}
+
+/* Task container */
+.task-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Card for task count and add task button */
+.task-header-card {
+    width: 100%;
+    max-width: 800px;
+    background-color: #f7f9fc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative; /* This ensures child elements respect card boundary */
+}
+
+.task-header-card h2 {
+    font-size: 24px;
+    color: #34495e;
+    margin: 0;
+    display: inline-block;
+}
+
+/* Plus button inside the card */
+.add-task-button {
+    background-color: #007bff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: fit-content;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: auto; /* Pushes the button to the right inside the card */
+}
+
+.add-task-button:hover {
+    background-color: #0056b3;
+}
+
+/* Each task in its own card */
+.task-list {
+    width: 100%;
+    max-width: 800px;
+}
+
+.task-list-item {
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.task-list-item:hover {
+    transform: translateY(-5px);
+}
+
+.task-list-item h3 {
+    font-size: 20px;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.task-list-item p {
+    color: #7f8c8d;
+    font-size: 14px;
+    margin-top: 5px;
 }

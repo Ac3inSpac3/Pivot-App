@@ -3,7 +3,7 @@
 // Import Firebase functionality
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -21,19 +21,26 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Expose globally
+// Expose Firebase services globally
 window.auth = auth;
+window.db = db;
+window.collection = collection;
+window.addDoc = addDoc;
+window.getDocs = getDocs;
+window.query = query;
+window.where = where;
 window.signInWithEmailAndPassword = signInWithEmailAndPassword;
 window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
 window.signOut = signOut;
 window.onAuthStateChanged = onAuthStateChanged;
+window.orderBy = orderBy;
 
 // Event listeners for login and register
 document.addEventListener('DOMContentLoaded', () => {
     // Login modal submit button and Enter key handler
     document.getElementById('submit-login-modal')?.addEventListener('click', handleLogin);
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && document.getElementById('login-form').style.display === 'block') {
+        if (event.key === 'Enter' && document.getElementById('login-form').style.display === 'block' && document.getElementById('task-modal') === null) {
             handleLogin();
             console.log("loging in user")
         }
@@ -54,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register modal submit button and Enter key handler
     document.getElementById('submit-register-modal')?.addEventListener('click', handleRegister);
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && document.getElementById('register-form').style.display === 'block') {
+        if (event.key === 'Enter' && document.getElementById('register-form').style.display === 'block' && document.getElementById('task-modal') === null) {
             handleRegister();
             console.log("registering user")
         }
@@ -106,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Display user's email on the account page if logged in
             if (window.location.pathname.includes('account.html')) {
                 document.getElementById('welcome-message').textContent = `Welcome, ${user.email}`;
+                
             }
         } else {
             loginButton.style.display = 'block';
