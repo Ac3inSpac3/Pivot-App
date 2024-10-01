@@ -10,7 +10,14 @@ if ('serviceWorker' in navigator) {
 document.addEventListener('DOMContentLoaded', () => {
     function loadPage(page) {
         fetch(`components/${page}.html`)
-            .then(response => response.text())
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    // Load the 404 page if the requested page is not found
+                    return fetch('components/404.html').then(res => res.text());
+                }
+            })
             .then(data => {
                 const mainContent = document.getElementById('main-content');
                 if (mainContent) {
@@ -19,6 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     // If account page is loaded, display user email
                     if (page === 'account') {
                         displayUserEmail();
+                    }
+                    
+                    // If 404 page is loaded, set up the return home button
+                    if (page === '404') {
+                        document.getElementById('return-home')?.addEventListener('click', () => {
+                            loadPage('home');
+                        });
                     }
                 }
             })
